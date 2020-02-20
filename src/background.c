@@ -181,7 +181,7 @@ void background_renderStars( const double dt )
 
    glUseProgram(stars_glsl_program);
 
-   glPointSize(1 / gl_screen.scale);
+   //glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
 
    /* Do some scaling for now. */
@@ -248,7 +248,7 @@ void background_renderStars( const double dt )
    glDisableVertexAttribArray( stars_glsl_program_vertex );
    glDisableVertexAttribArray( stars_glsl_program_brightness );
 
-   glPointSize(1 / gl_screen.scale);
+   //glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
 
    glUseProgram(0);

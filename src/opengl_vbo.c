@@ -218,7 +218,7 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
 void* gl_vboMap( gl_vbo *vbo )
 {
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-   return glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+   return glMapBufferRange( GL_ARRAY_BUFFER, 0, vbo->size, GL_MAP_READ_BIT );
 }
 
 

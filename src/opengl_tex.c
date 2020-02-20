@@ -325,24 +325,13 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
 
    /* now lead the texture data up */
    SDL_LockSurface( surface );
-   if (gl_texHasCompress()) {
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
-            surface->w, surface->h, 0, GL_RGBA,
-            GL_UNSIGNED_BYTE, surface->pixels );
-   }
-   else {
       glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
             surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
-   }
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
    if ((flags & OPENGL_TEX_MIPMAPS) && gl_texHasMipmaps()) {
       /* Do fancy stuff. */
-      if (GLAD_GL_ARB_texture_filter_anisotropic) {
-         glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);
-         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, param);
-      }
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 9);
 

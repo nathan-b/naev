@@ -27,9 +27,14 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
       return 0;
    }
    length = bufsize;
+
+   const char *bufs[2];
+   bufs[0] = "#version 300 es\nprecision mediump float;\n";
+   // Skip first line, which should be #version directive
+   bufs[1] = strchr(buf, '\n') + 1;
    
    shader = glCreateShader(type);
-   glShaderSource(shader, 1, (const char**)&buf, &length);
+   glShaderSource(shader, 2, (const char**)bufs, NULL);
    glCompileShader(shader);
 
    /* Check for compile error */

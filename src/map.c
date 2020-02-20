@@ -646,7 +646,6 @@ static void map_drawMarker( double x, double y, double r, double a,
    alpha += M_PI*2. * (double)cur/(double)num;
 
    /* Draw the marking triangle. */
-   glEnable(GL_POLYGON_SMOOTH);
    col = *colours[type];
    col.a *= a;
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
@@ -656,7 +655,6 @@ static void map_drawMarker( double x, double y, double r, double a,
    gl_vboActivateAttribOffset( marker_vbo, solid_glsl_program_vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLES, 0, 3 );
    gl_endSolidProgram();
-   glDisable(GL_POLYGON_SMOOTH);
 }
 
 /**
@@ -762,7 +760,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
    col.g = cRed.g;
    col.b = cRed.b;
 
-   glDisable(GL_LINE_SMOOTH);
 
    /* Selected system. */
    if (map_selected != -1) {
@@ -781,8 +778,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
          y + cur_system->pos.y * map_zoom,
          1.5*r, &col, 0 );
 
-   if (!gl_vendorIsIntel())
-      glDisable(GL_LINE_SMOOTH);
 }
 
 
@@ -900,7 +895,6 @@ void map_renderJumps( double x, double y, int editor)
    StarSystem *sys, *jsys;
 
    /* Generate smooth lines. */
-   glDisable( GL_LINE_SMOOTH );
    glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
    for (i=0; i<systems_nstack; i++) {
@@ -963,7 +957,6 @@ void map_renderJumps( double x, double y, int editor)
    }
 
    /* Reset render parameters. */
-   glDisable( GL_LINE_SMOOTH );
    glLineWidth( 1. );
 }
 
@@ -980,7 +973,6 @@ void map_renderSystems( double bx, double by, double x, double y,
    double tx, ty;
 
    /* Smoother circles. */
-   glDisable(GL_LINE_SMOOTH);
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -1018,8 +1010,6 @@ void map_renderSystems( double bx, double by, double x, double y,
 
    }
 
-   if (!gl_vendorIsIntel())
-      glDisable( GL_LINE_SMOOTH );
 }
 
 
@@ -1040,7 +1030,6 @@ static void map_renderPath( double x, double y, double a )
       jcur = jmax; /* Jump range remaining. */
 
       /* Generate smooth lines. */
-      glDisable( GL_LINE_SMOOTH );
       glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
       for (j=0; j<map_npath; j++) {
@@ -1085,7 +1074,6 @@ static void map_renderPath( double x, double y, double a )
       }
 
       /* Reset render parameters. */
-      glDisable( GL_LINE_SMOOTH );
       glLineWidth( 1. );
    }
 }
